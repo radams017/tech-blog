@@ -9,10 +9,6 @@ router.get('/', async (req, res) => {
   try {
     // Get all projects and JOIN with user data
     const blogData = await BlogPost.findAll({
-      attributes: {
-        include: ['title', 'body', 'date_created']
-      },
-    }, {
       include: [{
         model: User,
         attributes: ['name'],
@@ -34,21 +30,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/project/:id', async (req, res) => {
+router.get('/blog/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
+    const blogData = await BlogPost.findByPk(req.params.id, {
       include: [{
         model: User,
         attributes: ['name'],
       }, ],
     });
 
-    const project = projectData.get({
+    const blog = blogData.get({
       plain: true
     });
 
-    res.render('project', {
-      ...project,
+    res.render('blog', {
+      ...blog,
       logged_in: req.session.logged_in
     });
   } catch (err) {
