@@ -1,12 +1,17 @@
-const title = document.querySelector('#project-name').value.trim()
-const body = document.querySelector('#project-desc').value.trim()
+// const e = require("express");
+
+const form = document.getElementById('blog-form')
 
 
 const updateButtonHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
+    event.preventDefault();
 
-        const response = await fetch(`/api/blog/${id}`, {
+    const title = document.querySelector('#blog-name').value.trim();
+    const body = document.querySelector('#blog-desc').value.trim();
+    const blogID = document.querySelector('#post-id').value.trim();
+
+    if (blogID) {
+        const response = await fetch(`/api/blog/${blogID}`, {
             method: 'PUT',
             body: JSON.stringify({
                 title,
@@ -25,9 +30,6 @@ const updateButtonHandler = async (event) => {
     }
 };
 
-console.log(JSON.stringify({
-    title,
-    body
-}))
+document.querySelector('#blog-form').addEventListener('submit', updateButtonHandler);
 
-document.querySelector('#blogSubmit').addEventListener('click', updateButtonHandler)
+// document.querySelector('').addEventListener('submit', updateButtonHandler)
